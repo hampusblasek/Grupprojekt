@@ -1,0 +1,34 @@
+E-shop
+
+User
+/ Skapa konto
+/ Logga in
+/ Ta bort konto
+
+
+Produkter
+/ Skapa en ny produkt
+/ Ta bort produkt
+/ Hämta alla produkter
+/ Sök efter produkt
+
+
+(Alternativt)
+Varukorg (Lista?)
+/ Lägg till i varukorg
+/ Ta bort i varukorg
+
+
+Modeller
+
+User - Relation med cart
+{Lista med cart}
+
+Product - Relation med cart
+
+(alternativt)
+Cart - Relation med User
+{Lista med produkter} 
+
+
+DTO
