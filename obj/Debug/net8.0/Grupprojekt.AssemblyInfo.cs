@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Grupprojekt")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+23762aaaca778b1afe18a7dc1fab83d7f6f18193")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c16e1fa636c08d3d6ae09cc8d9d915af5a2961b0")]
 [assembly: System.Reflection.AssemblyProductAttribute("Grupprojekt")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Grupprojekt")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

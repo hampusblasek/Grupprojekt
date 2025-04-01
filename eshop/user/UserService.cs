@@ -1,10 +1,10 @@
 public interface IUserService{
 
-Task<User> RegisterUser(string mail, string password); 
+Task<User> RegisterUser(string mail, string password); // Add new user
 
-Task<User> Login(string mail, string password);
+Task<User> Login(string mail, string password); // Login user
 
-Task<User> RemoveUser(Guid id);
+Task<User> RemoveUser(Guid id); // Delete user
 
 }
 public class UserService : IUserService{

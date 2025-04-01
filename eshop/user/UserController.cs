@@ -11,6 +11,7 @@ public class UserController : ControllerBase
     {
         this.UserService = userService;
     }
+    //Create new user
     [HttpPost("new")]
     public async  Task<IActionResult> NewUser([FromBody] UserDtoRequest dto)
     {
@@ -25,7 +26,7 @@ public class UserController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-
+    // Login user
     [HttpPost("Login")]
     public async  Task<IActionResult> Login([FromBody] UserDtoRequest dto)
     {
@@ -40,7 +41,7 @@ public class UserController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-
+    // Delete User - should only be avalible when logged in
     [HttpDelete("remove/{id}")]
     public async  Task<IActionResult> RemoveUser(Guid id)
     {

@@ -4,14 +4,15 @@ using Microsoft.AspNetCore.Mvc;
 [Route("product")]
 public class ProductController : ControllerBase
 {
-    /* private readonly ProductService ProductService;
+    private readonly ProductService ProductService;
 
     public ProductController(ProductService productService)
     {
         this.ProductService = productService;
     }
+    // Add new product
     [HttpPost("new/{id}")]
-    public async  Task<IActionResult> NewUser(Guid id, [FromBody] ProductDto dto)
+    public async  Task<IActionResult> NewProduct(Guid id, [FromBody] ProductDto dto)
     {
         try
         {
@@ -25,6 +26,7 @@ public class ProductController : ControllerBase
         }
     }
 
+    // show all products
     [HttpGet("all")]
     public async Task<IActionResult> GetProducts()
     {
@@ -40,6 +42,7 @@ public class ProductController : ControllerBase
         }
     }
 
+    // show all products from a specific user
     [HttpGet("my/{id}")]
     public async Task<IActionResult> GetMyProducts(Guid id)
     {
@@ -54,7 +57,7 @@ public class ProductController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-
+    // search for a specific product
     [HttpGet("search/{title}")]
     public async Task<IActionResult> FindProducts(string title)
     {
@@ -70,6 +73,7 @@ public class ProductController : ControllerBase
         }
     }
     
+    //Delete a product
     [HttpDelete("remove")]
     public async  Task<IActionResult> RemoveProduct([FromQuery] Guid userId, Guid productId )
     {
@@ -83,5 +87,5 @@ public class ProductController : ControllerBase
         {
             return BadRequest(e.Message);
         } 
-    } */
+    } 
 }

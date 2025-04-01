@@ -12,6 +12,7 @@ public class Program
             ?? throw new Exception("Missing CONNECTION_STRING environment variable");
         var builder = WebApplication.CreateBuilder(args);
 
+        // Added services and repositories for dependency injection
         builder.Services.AddScoped<UserService>();
         builder.Services.AddScoped<UserRepository>();
         builder.Services.AddScoped<ProductService>();

@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 public interface IUserRepository{
-Task AddUser(User user);
-Task<User?> FindByMail(string mail);
-Task<User?> FindById(Guid id);
-Task DeleteUser(Guid id);
+Task AddUser(User user); // Add new user
+Task<User?> FindByMail(string mail); // Returns User with matching email
+Task<User?> FindById(Guid id); // Returns user with matching id
+Task DeleteUser(Guid id); // Delete user
 }
 
 public class UserRepository : IUserRepository{
