@@ -1,6 +1,8 @@
 
 namespace Grupprojekt;
 
+//installerat Entity Framework och env
+
 public class Program
 {
     public static void Main(string[] args)
