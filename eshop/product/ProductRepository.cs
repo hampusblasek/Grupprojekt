@@ -21,5 +21,10 @@ public class ProductRepository : IProductRepository{
         await Context.Product.Where(pr => pr.Id.Equals(id)).ExecuteDeleteAsync();
         await Context.SaveChangesAsync();
     } 
+
+    public async Task<User?> FindById(Guid id){
+
+        return await Context.User.FindAsync(id);
+    }
     
 }
