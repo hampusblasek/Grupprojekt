@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 public class UserController : ControllerBase
 {
 
-    /* private readonly UserService UserService;
+    private readonly UserService UserService;
 
     public UserController(UserService userService)
     {
@@ -54,5 +54,5 @@ public class UserController : ControllerBase
         {
             return BadRequest(e.Message);
         }
-    } */
+    } 
 }

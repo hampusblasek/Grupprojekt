@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 public interface IProductRepository{
 Task AddProduct(Product product, User user);
 Task<List<ProductDto>> GetAllProducts();
@@ -6,7 +8,7 @@ Task<User?> FindUser(Guid id);
 Task DeleteProduct(Guid id);
 }
 
-/* public class ProductRepository : IProductRepository{
+public class ProductRepository : IProductRepository{
 
     private readonly AppContext Context;
 
@@ -20,4 +22,4 @@ Task DeleteProduct(Guid id);
         await Context.SaveChangesAsync();
     } 
     
-}  */
+}

@@ -6,7 +6,7 @@ Task<Product> FindProduct(string title);
 Task<Product> DeleteProduct(Guid userId, Guid productId);
 }
 
-/* public class ProductService : IProductService{
+public class ProductService : IProductService{
 
     private readonly ProductRepository ProductRepository;
 
@@ -16,4 +16,4 @@ Task<Product> DeleteProduct(Guid userId, Guid productId);
     }
 
     
-}  */
+} 
