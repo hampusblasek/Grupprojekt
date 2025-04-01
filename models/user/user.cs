@@ -1,20 +1,14 @@
-public class User
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
+public class User : IdentityUser
 {
-    public Guid Id { get; set; }
-    public string Mail { get; set; } = "";
-    public string Password { get; set; } = "";
     public List<Product> Products { get; set; } = new();
-    public User(string mail, string password)
-    {
-        this.Mail = mail;
-        this.Password = password;
-        this.Id = Guid.NewGuid();
-    }
     public User() { }
 
 }
 //------------------------------------------------------------
-public class UserDtoRequest
+/* public class UserDtoRequest
 {
     public Guid Id { get; set; }
     public string Mail { get; set; } = "";
@@ -37,4 +31,4 @@ public class UserDtoMessage
         this.Id = user.Id;
     }
     public UserDtoMessage() { }
-}
+} */

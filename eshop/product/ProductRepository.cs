@@ -8,7 +8,7 @@ Task<User?> FindUser(Guid id); // Returns a user with matching id
 Task DeleteProduct(Guid id); // Delete a product - a user can only delete its own products
 }
 
-public class ProductRepository : IProductRepository{
+public class ProductRepository {
 
     private readonly AppContext Context;
 

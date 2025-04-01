@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 [Route("product")]
 public class ProductController : ControllerBase
 {
-    private readonly ProductService ProductService;
+    /*  private readonly ProductService ProductService;
 
     public ProductController(ProductService productService)
     {
@@ -87,5 +87,5 @@ public class ProductController : ControllerBase
         {
             return BadRequest(e.Message);
         } 
-    } 
+    }   */
 }

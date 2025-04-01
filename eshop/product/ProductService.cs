@@ -6,7 +6,7 @@ Task<Product> FindProduct(string title); // returns a product with matching titl
 Task<Product> DeleteProduct(Guid userId, Guid productId); // Delete a product - a user can only delete its own products
 }
 
-public class ProductService : IProductService{
+public class ProductService {
 
     private readonly ProductRepository ProductRepository;
 

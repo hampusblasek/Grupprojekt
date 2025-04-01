@@ -11,49 +11,27 @@ public class UserController : ControllerBase
     {
         this.UserService = userService;
     }
-    //Create new user
-    [HttpPost("new")]
-    public async  Task<IActionResult> NewUser([FromBody] UserDtoRequest dto)
+    // För att skapa en användare skriv in eran localhost-adress och lägg till /register ex. http://localhost:5206/register
+    // skapa ett json-objekt med email och password. exempel nedan
+    /* {
+  "email": "ingen@ingen.se",
+  "password":"Hejsan1!"
+} */
+
+// För att logga in lägg till login, istället för register ex. http://localhost:5206/login
+
+[HttpDelete("remove/{id}")]
+public async Task<IActionResult> RemoveUser(Guid id)
+{
+    try
     {
-        try
-        {
-            User user = await UserService.RegisterUser(dto.Mail, dto.Password);
-            UserDtoMessage output = new(user);
-            return Ok(output);
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
+        User user = await UserService.RemoveUser(id);
+        //UserDtoMessage output = new(user);
+        return Ok(user);
     }
-    // Login user
-    [HttpPost("Login")]
-    public async  Task<IActionResult> Login([FromBody] UserDtoRequest dto)
+    catch (Exception e)
     {
-        try
-        {
-            User user = await UserService.Login(dto.Mail, dto.Password);
-            UserDtoMessage output = new(user);
-            return Ok(output);
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
+        return BadRequest(e.Message);
     }
-    // Delete User - should only be avalible when logged in
-    [HttpDelete("remove/{id}")]
-    public async  Task<IActionResult> RemoveUser(Guid id)
-    {
-        try
-        {
-            User user = await UserService.RemoveUser(id);
-            UserDtoMessage output = new(user);
-            return Ok(output);
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
-    } 
+} 
 }
