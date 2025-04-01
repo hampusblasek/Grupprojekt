@@ -32,3 +32,8 @@ Cart - Relation med User
 
 
 DTO
+
+// dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
+// dotnet add package Microsoft.EntityFrameworkCore.Design
+
+// dotnet add package DotNetEnv --- För att kunna installera en env-fil

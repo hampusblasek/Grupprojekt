@@ -2,13 +2,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Grupprojekt;
 
-//installerat Entity Framework och env
-
-// dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
-// dotnet add package Microsoft.EntityFrameworkCore.Design
-
-// dotnet add package DotNetEnv --- För att kunna installera en env-fil
-
 public class Program
 {
     public static void Main(string[] args)
