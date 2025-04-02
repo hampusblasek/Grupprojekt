@@ -1,5 +1,5 @@
 public interface IUserService{
-Task<User> RemoveUser(Guid id); // Delete user
+Task<User> RemoveUser(string id); // Delete user
 
 }
 public class UserService : IUserService{
@@ -10,15 +10,16 @@ public class UserService : IUserService{
     {
         this.UserRepository = userRepository;
     }
-    public async Task<User> RemoveUser(Guid id)
+    public async Task<User> RemoveUser(string id)
     {
+        
 
         User? user = await UserRepository.FindById(id);
         if (user == null)
         {
             throw new ArgumentException("This user does not exist");
         }
-        
+
         await UserRepository.DeleteUser(id);
 
         return user;

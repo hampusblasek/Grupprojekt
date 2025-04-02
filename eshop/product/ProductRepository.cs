@@ -24,7 +24,7 @@ public class ProductRepository {
 
     public async Task<User?> FindById(Guid id){
 
-        return await Context.User.FindAsync(id);
+        return await Context.Users.FindAsync(id);
     }
     
 }

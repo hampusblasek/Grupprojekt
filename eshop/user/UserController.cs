@@ -1,3 +1,5 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -20,18 +22,25 @@ public class UserController : ControllerBase
 
 // För att logga in lägg till login, istället för register ex. http://localhost:5206/login
 
-[HttpDelete("remove/{id}")]
-public async Task<IActionResult> RemoveUser(Guid id)
-{
-    try
+[HttpDelete("remove")]
+    [Authorize("remove_user")]
+    public async  Task<IActionResult> RemoveUser()
     {
-        User user = await UserService.RemoveUser(id);
-        //UserDtoMessage output = new(user);
-        return Ok(user);
+        try
+        {
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrWhiteSpace(id))
+        {
+            throw new ArgumentException("No identified user");
+        }
+            
+            User removeUser = await UserService.RemoveUser(id);
+            return Ok(removeUser);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
-    catch (Exception e)
-    {
-        return BadRequest(e.Message);
-    }
-} 
 }

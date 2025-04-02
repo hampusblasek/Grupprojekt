@@ -14,15 +14,19 @@ public class Program
             ?? throw new Exception("Missing CONNECTION_STRING environment variable");
         var builder = WebApplication.CreateBuilder(args);
 
-        /* builder.Services.AddAuthorization(options => // exempel på en policy att användas till new product
+        builder.Services.AddDbContext<AppContext>(options =>
         {
-            options.AddPolicy("new_product", policy =>
+            options.UseNpgsql(connectionString);
+        }); 
+        builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme); 
+        builder.Services.AddAuthorization(options =>
+        {
+            options.AddPolicy("remove_user", policy =>
             {
                 policy.RequireAuthenticatedUser();
             });
-        }); */
+        });
 
-        builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme); 
         builder.Services.AddIdentityCore<User>() 
         .AddEntityFrameworkStores<AppContext>()
         .AddApiEndpoints();
@@ -33,13 +37,6 @@ public class Program
         builder.Services.AddScoped<ProductService>();
         builder.Services.AddScoped<ProductRepository>();
 
-        builder.Services.AddAuthorization();
-
-        builder.Services.AddDbContext<AppContext>(options =>
-        {
-            options.UseNpgsql(connectionString);
-        }); 
-
         builder.Services.AddControllers();
 
         builder.Services.AddEndpointsApiExplorer();
@@ -49,12 +46,9 @@ public class Program
 
         app.UseHttpsRedirection();
         app.MapIdentityApi<User>();
-
-        app.UseAuthorization();
-
         app.MapControllers();
-        app.UseAuthorization(); // 6.
         app.UseAuthentication(); //.7
+        app.UseAuthorization(); // 6.
 
         app.Run();
     }
