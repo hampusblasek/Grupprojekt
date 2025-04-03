@@ -6,19 +6,22 @@ using Microsoft.AspNetCore.Mvc;
 [Route("product")]
 public class ProductController : ControllerBase
 {
-    /*  private readonly ProductService ProductService;
+    private readonly ProductService ProductService;
 
     public ProductController(ProductService productService)
     {
         this.ProductService = productService;
     }
+
     // Add new product
-    [HttpPost("new/{id}")]
-    public async  Task<IActionResult> NewProduct(Guid id, [FromBody] ProductDto dto)
+    [HttpPost("new")]
+    public async  Task<IActionResult> NewProduct([FromBody] ProductDto dto)
     {
         try
         {
-            Product product = await ProductService.RegisterProduct(id, dto.Title, dto.Description,dto.Price);
+            string userId = dto.UserId;
+            
+            Product product = await ProductService.RegisterProduct(userId, dto.Title, dto.Description,dto.Price);
             ProductDto output = new(product);
             return Ok(output);
         }
@@ -27,7 +30,7 @@ public class ProductController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-
+    /*
     // show all products
     [HttpGet("all")]
     public async Task<IActionResult> GetProducts()
