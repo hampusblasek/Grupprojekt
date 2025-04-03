@@ -15,5 +15,16 @@ public class ProductService {
         this.ProductRepository = productRepository;
     }
 
+    public async Task<Product> RegisterProduct(string userId, string title, string description, double price)
+    {
+        User? user = await ProductRepository.FindById(userId);
+        if (user == null)
+        {
+            throw new ArgumentException("No identified user");
+        }
+        Product product = new Product(title, description, price, user);
+        await ProductRepository.AddProduct(product, user);
+        return product;
+    }
     
 } 
