@@ -23,13 +23,16 @@ public class ProductDto
     public string Title { get; set; } = "";
     public string Description { get; set; } = "";
     public double Price { get; set; }
+    public string UserId { get; set; } = ""; // Identity Core uses string for Id
+
     public ProductDto(Product product)
     {
         this.Title = product.Title;
         this.Description = product.Description;
         this.Price = product.Price;
         this.Id = product.Id;
+        this.UserId = product.User?.Id ?? "";
     }
+    
     public ProductDto() { }
-
 }
