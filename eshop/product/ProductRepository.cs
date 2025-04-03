@@ -16,13 +16,18 @@ public class ProductRepository {
         this.Context = context;
     }
 
+    public async Task AddProduct(Product product, User user){
+        Context.Product.Add(product);
+        await Context.SaveChangesAsync();
+    }
+
     public async Task DeleteProduct(Guid id){
 
         await Context.Product.Where(pr => pr.Id.Equals(id)).ExecuteDeleteAsync();
         await Context.SaveChangesAsync();
     } 
 
-    public async Task<User?> FindById(Guid id){
+    public async Task<User?> FindById(string id){
 
         return await Context.Users.FindAsync(id);
     }
