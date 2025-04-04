@@ -6,20 +6,37 @@ using Microsoft.AspNetCore.Mvc;
 [Route("product")]
 public class ProductController : ControllerBase
 {
-    /*  private readonly ProductService ProductService;
+    private readonly ProductService ProductService;
 
     public ProductController(ProductService productService)
     {
         this.ProductService = productService;
     }
+
     // Add new product
-    [HttpPost("new/{id}")]
-    public async  Task<IActionResult> NewProduct(Guid id, [FromBody] ProductDto dto)
+    [Authorize] // Only authenticated users can add products
+    [HttpPost("new")]
+    public async  Task<IActionResult> NewProduct([FromBody] ProductResponseDto dto)
     {
+        // This will validate the validation attributes in the ProductResponseDto class
+        if (!ModelState.IsValid)
+        {
+            // If not valid, ModelState will contain the errors
+            return BadRequest(ModelState);
+        }
+
         try
         {
-            Product product = await ProductService.RegisterProduct(id, dto.Title, dto.Description,dto.Price);
-            ProductDto output = new(product);
+            // string userId = dto.UserId; // Old way of getting the userId from the DTO
+            
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // New way of getting the userId from the token
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("UserId is missing in the token.");
+            }
+
+            Product product = await ProductService.RegisterProduct(userId, dto.Title, dto.Description,dto.Price);
+            ProductResponseDto output = new(product);
             return Ok(output);
         }
         catch (Exception e)
@@ -27,7 +44,7 @@ public class ProductController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-
+    /*
     // show all products
     [HttpGet("all")]
     public async Task<IActionResult> GetProducts()
