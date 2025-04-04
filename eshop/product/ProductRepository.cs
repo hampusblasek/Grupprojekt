@@ -22,7 +22,7 @@ public class ProductRepository {
         await Context.SaveChangesAsync();
     } 
 
-    public async Task<User?> FindById(Guid id){
+    public async Task<User?> FindById(string id){ // Change to string, as Identity Core uses string for Id
 
         return await Context.Users.FindAsync(id);
     }
