@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 public interface IProductRepository{
 Task AddProduct(Product product, User user); // Add new product
-Task<List<ProductDto>> GetAllProducts(); // Returns a list with all products
+Task<List<ProductResponseDto>> GetAllProducts(); // Returns a list with all products
 Task<Product> FindProduct(string title); // Returns a product with matching titles
 Task<User?> FindUser(Guid id); // Returns a user with matching id
 Task DeleteProduct(Guid id); // Delete a product - a user can only delete its own products
