@@ -14,13 +14,20 @@ public class ProductController : ControllerBase
     }
 
     // Add new product
+    [Authorize] // Only authenticated users can add products
     [HttpPost("new")]
     public async  Task<IActionResult> NewProduct([FromBody] ProductDto dto)
     {
         try
         {
-            string userId = dto.UserId;
+            // string userId = dto.UserId; // Old way of getting the userId from the DTO
             
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // New way of getting the userId from the token
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("UserId is missing in the token.");
+            }
+
             Product product = await ProductService.RegisterProduct(userId, dto.Title, dto.Description,dto.Price);
             ProductDto output = new(product);
             return Ok(output);
