@@ -16,20 +16,27 @@ public class ProductController : ControllerBase
     // Add new product
     [Authorize] // Only authenticated users can add products
     [HttpPost("new")]
-    public async  Task<IActionResult> NewProduct([FromBody] ProductDto dto)
+    public async  Task<IActionResult> NewProduct([FromBody] ProductResponseDto dto)
     {
+        // This will validate the validation attributes in the ProductResponseDto class
+        if (!ModelState.IsValid)
+        {
+            // If not valid, ModelState will contain the errors
+            return BadRequest(ModelState);
+        }
+
         try
         {
             // string userId = dto.UserId; // Old way of getting the userId from the DTO
             
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // New way of getting the userId from the token
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // New way of getting the userId from the token
             if (string.IsNullOrEmpty(userId))
             {
                 return Unauthorized("UserId is missing in the token.");
             }
 
             Product product = await ProductService.RegisterProduct(userId, dto.Title, dto.Description,dto.Price);
-            ProductDto output = new(product);
+            ProductResponseDto output = new(product);
             return Ok(output);
         }
         catch (Exception e)
