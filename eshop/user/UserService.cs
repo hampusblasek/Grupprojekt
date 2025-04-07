@@ -4,9 +4,9 @@ Task<User> RemoveUser(string id); // Delete user
 }
 public class UserService : IUserService{
 
-    private readonly UserRepository UserRepository;
+    private readonly IUserRepository UserRepository;
 
-    public UserService(UserRepository userRepository)
+    public UserService(IUserRepository userRepository)
     {
         this.UserRepository = userRepository;
     }

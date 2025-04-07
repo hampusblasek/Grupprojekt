@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 public class UserController : ControllerBase
 {
 
-    private readonly UserService UserService;
+    private readonly IUserService UserService;
 
-    public UserController(UserService userService)
+    public UserController(IUserService userService)
     {
         this.UserService = userService;
     }

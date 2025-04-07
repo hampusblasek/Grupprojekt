@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions; // to use Regex
 
 public interface IProductService{
-Task<Product> RegisterProduct(Guid id, string title, string description, double price); // Add new product
+Task<Product> RegisterProduct(string id, string title, string description, double price); // Add new product
 Task<List<ProductResponseDto>> GetProducts(Guid id); // Returns a list with all products
 Task<List<ProductResponseDto>> SortProductsByPrice();
 Task<IEnumerable<ProductResponseDto>> GetMyProducts(Guid id); // Returns a list with a specific users products
@@ -9,7 +9,7 @@ Task<Product> FindProduct(string title); // returns a product with matching titl
 Task<Product> DeleteProduct(Guid userId, Guid productId); // Delete a product - a user can only delete its own products
 }
 
-public class ProductService {
+public class ProductService { // : IProductService
 
     private readonly ProductRepository ProductRepository;
 

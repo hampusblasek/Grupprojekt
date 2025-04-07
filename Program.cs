@@ -32,10 +32,10 @@ public class Program
         .AddApiEndpoints();
 
         // Added services and repositories for dependency injection
-        builder.Services.AddScoped<UserService>();
-        builder.Services.AddScoped<UserRepository>();
-        builder.Services.AddScoped<ProductService>();
-        builder.Services.AddScoped<ProductRepository>();
+        builder.Services.AddScoped<IUserService, UserService>();
+        builder.Services.AddScoped<IUserRepository, UserRepository>();
+        builder.Services.AddScoped<ProductService>(); // add IProductService
+        builder.Services.AddScoped<ProductRepository>(); // add IProductRepository
 
         builder.Services.AddControllers();
 
