@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 public interface IUserRepository{
 Task<User?> FindById(string id); // Returns user with matching id
 Task DeleteUser(string id); // Delete user
+Task DeleteUserProducts(List<Product> products);
 }
 
 public class UserRepository : IUserRepository{
@@ -23,23 +24,29 @@ public class UserRepository : IUserRepository{
 
         if (user == null) throw new ArgumentNullException("User can not be found");
 
-        await DeleteAllUsersProducts(user.Products); // Delete all products before deleting user
+        await DeleteUserProducts(user.Products); // Delete all products before deleting user
         
         await Context.Users.Where(id => id.Id.Equals(userId)).ExecuteDeleteAsync();
         await Context.SaveChangesAsync();
 
     }
 
-    public async Task DeleteAllUsersProducts(List<Product> products) // Delete all Users product
+    public async Task DeleteUserProducts(List<Product> products) // Delete all Users product
     {
-        foreach (var product in products)
-        {
-            Product? removeProduct = await Context.Product.FirstOrDefaultAsync(pr => pr.Id.Equals(product.Id));
-            if (removeProduct != null)
-            {
-                Context.Product.Remove(removeProduct);
-            }
+        if (products.Count == 0) return;
+
+        // Collect all product IDs
+        var productIds = products.Select(p => p.Id).ToList();
+
+        // Get all products to delete in a list
+        var productsToDelete = await Context.Product
+            .Where(p => productIds.Contains(p.Id))
+            .ToListAsync();
+
+        if (productsToDelete.Any())
+        {   //Delete all users products
+            Context.Product.RemoveRange(productsToDelete);
+            await Context.SaveChangesAsync();
         }
-        await Context.SaveChangesAsync();
     }
 }
