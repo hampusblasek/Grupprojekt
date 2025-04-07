@@ -44,6 +44,20 @@ public class ProductController : ControllerBase
             return BadRequest(e.Message);
         }
     }
+    [HttpGet("sort/price")]
+    public async Task<IActionResult> SortProductsByPrice()
+    {
+        try
+        {
+            List<ProductResponseDto> product = await ProductService.SortProductsByPrice();
+
+            return Ok(product);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
     /*
     // show all products
     [HttpGet("all")]

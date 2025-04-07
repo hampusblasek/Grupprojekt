@@ -12,8 +12,6 @@ public class UserService : IUserService{
     }
     public async Task<User> RemoveUser(string id)
     {
-        
-
         User? user = await UserRepository.FindById(id);
         if (user == null)
         {

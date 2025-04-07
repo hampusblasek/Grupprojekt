@@ -16,10 +16,30 @@ public class UserRepository : IUserRepository{
         return await Context.Users.FindAsync(id);
     }
 
-    public async Task DeleteUser(string userId){
+    public async Task DeleteUser(string userId)
+    {
+        var user = await Context.Users.Include(pr => pr.Products)
+        .FirstOrDefaultAsync(id => id.Id.Equals(userId));
 
+        if (user == null) throw new ArgumentNullException("User can not be found");
+
+        await DeleteAllUsersProducts(user.Products); // Delete all products before deleting user
+        
         await Context.Users.Where(id => id.Id.Equals(userId)).ExecuteDeleteAsync();
         await Context.SaveChangesAsync();
+
     }
-    
+
+    public async Task DeleteAllUsersProducts(List<Product> products) // Delete all Users product
+    {
+        foreach (var product in products)
+        {
+            Product? removeProduct = await Context.Product.FirstOrDefaultAsync(pr => pr.Id.Equals(product.Id));
+            if (removeProduct != null)
+            {
+                Context.Product.Remove(removeProduct);
+            }
+        }
+        await Context.SaveChangesAsync();
+    }
 }
