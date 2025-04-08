@@ -6,13 +6,15 @@ public class Product
     public string Title { get; set; } = "";
     public string Description { get; set; } = "";
     public double Price { get; set; }
+    public bool InStock { get; set; }
     public User User { get; set; }
 
-    public Product(string title, string description, double price, User user)
+    public Product(string title, string description, double price, bool inStock, User user)
     {
         this.Title = title;
         this.Description = description;
         this.Price = price;
+        this.InStock = inStock;
         this.User = user;
         this.Id = Guid.NewGuid();
     }
@@ -39,14 +41,17 @@ public class ProductResponseDto
     public double Price { get; set; }
     // public string UserId { get; set; } = ""; // Identity Core uses string for Id // Don't need this since we are using the UserId from the token
 
+    public bool InStock { get; set; }
+
     public ProductResponseDto(Product product)
     {
         this.Title = product.Title;
         this.Description = product.Description;
         this.Price = product.Price;
+        this.InStock = product.InStock;
         this.Id = product.Id;
         // this.UserId = product.User?.Id ?? ""; // Don't need this since we are using the UserId from the token
     }
-    
+
     public ProductResponseDto() { }
 }
