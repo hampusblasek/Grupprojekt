@@ -61,20 +61,24 @@ public class ProductController : ControllerBase
         }
     }
 
-
-
-
-    // Show all products from a specific user (based on the authenticated user)
-    [HttpGet("user/{userId}")]
-    [Authorize]  // Makes sure the user is authenticated
-    public async Task<IActionResult> GetMyProducts()
-
-    
-    // show all products
     [HttpGet("all")]
-
+    public async Task<IActionResult> GetProducts()
     {
+        try
+        {
+            List<ProductResponseDto> product = await ProductService.GetProducts(Guid.Empty);
+            return Ok(product);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 
+    [HttpGet("user")]
+    [Authorize]  // Makes sure the user is authenticated
+    public async Task<IActionResult> GetMyProducts() // Show all products from a specific user (based on the authenticated user)
+    {
         try
         {
 
@@ -118,10 +122,6 @@ public class ProductController : ControllerBase
             // Update the inStock status
             await ProductService.UpdateProductStockStatus(productId, inStock);
             return Ok("Product stock status was updated successfully.");
-
-            List<ProductResponseDto> product = await ProductService.GetProducts(Guid.Empty);
-            return Ok(product);
-
         }
         catch (Exception e)
         {

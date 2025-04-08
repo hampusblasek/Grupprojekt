@@ -27,8 +27,8 @@ public class ProductRepository
     }
 
 
-    public async Task DeleteProduct(Guid id)
-    {
+    /* public async Task DeleteProduct(Guid id){} */
+    
 
      public async Task<List<ProductResponseDto>> GetAllProducts()
     {

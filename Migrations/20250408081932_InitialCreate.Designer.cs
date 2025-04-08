@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Grupprojekt.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20250407142932_InitialCreateEmma")]
-    partial class InitialCreateEmma
+    [Migration("20250408081932_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -165,6 +165,9 @@ namespace Grupprojekt.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<bool>("InStock")
+                        .HasColumnType("boolean");
 
                     b.Property<double>("Price")
                         .HasColumnType("double precision");

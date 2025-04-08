@@ -1,31 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ramit\\OneDrive\\Skrivbord\\Grupprojekt\\Grupprojekt.csproj": {}
+    "/Users/hampusblasek/Nuvarande kurser/Backend 2/Grupprojekt/Grupprojekt.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ramit\\OneDrive\\Skrivbord\\Grupprojekt\\Grupprojekt.csproj": {
+    "/Users/hampusblasek/Nuvarande kurser/Backend 2/Grupprojekt/Grupprojekt.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ramit\\OneDrive\\Skrivbord\\Grupprojekt\\Grupprojekt.csproj",
+        "projectUniqueName": "/Users/hampusblasek/Nuvarande kurser/Backend 2/Grupprojekt/Grupprojekt.csproj",
         "projectName": "Grupprojekt",
-        "projectPath": "C:\\Users\\ramit\\OneDrive\\Skrivbord\\Grupprojekt\\Grupprojekt.csproj",
-        "packagesPath": "C:\\Users\\ramit\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ramit\\OneDrive\\Skrivbord\\Grupprojekt\\obj\\",
+        "projectPath": "/Users/hampusblasek/Nuvarande kurser/Backend 2/Grupprojekt/Grupprojekt.csproj",
+        "packagesPath": "/Users/hampusblasek/.nuget/packages/",
+        "outputPath": "/Users/hampusblasek/Nuvarande kurser/Backend 2/Grupprojekt/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\ramit\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/hampusblasek/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -43,8 +37,7 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.100"
+        }
       },
       "frameworks": {
         "net8.0": {
@@ -62,6 +55,10 @@
               "target": "Package",
               "version": "[8.0.8, )"
             },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.3, )"
+            },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
@@ -75,6 +72,10 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.4.0, )"
+            },
+            "dotenv.net": {
+              "target": "Package",
+              "version": "[3.2.1, )"
             }
           },
           "imports": [
@@ -88,24 +89,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[8.0.12, 8.0.12]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[8.0.12, 8.0.12]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[8.0.12, 8.0.12]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[8.0.12, 8.0.12]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -114,7 +97,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.401/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
