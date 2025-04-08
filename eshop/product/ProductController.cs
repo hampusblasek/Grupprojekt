@@ -63,14 +63,21 @@ public class ProductController : ControllerBase
 
 
 
+
     // Show all products from a specific user (based on the authenticated user)
     [HttpGet("user/{userId}")]
     [Authorize]  // Makes sure the user is authenticated
     public async Task<IActionResult> GetMyProducts()
+
+    
+    // show all products
+    [HttpGet("all")]
+
     {
 
         try
         {
+
             // Get userId from the token
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? throw new UnauthorizedAccessException("User ID is missing.");
 
@@ -111,6 +118,10 @@ public class ProductController : ControllerBase
             // Update the inStock status
             await ProductService.UpdateProductStockStatus(productId, inStock);
             return Ok("Product stock status was updated successfully.");
+
+            List<ProductResponseDto> product = await ProductService.GetProducts(Guid.Empty);
+            return Ok(product);
+
         }
         catch (Exception e)
         {
@@ -119,10 +130,17 @@ public class ProductController : ControllerBase
     }
 
 
+
     /*
     // show all products
     [HttpGet("all")]
     public async Task<IActionResult> GetProducts()
+
+    /*
+    // show all products from a specific user
+    [HttpGet("my/{id}")]
+    public async Task<IActionResult> GetMyProducts(Guid id)
+
     {
         try
         {
