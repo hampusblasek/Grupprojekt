@@ -22,6 +22,14 @@ public class ProductRepository  { // : IProductRepository
         await Context.SaveChangesAsync();
     }
 
+     public async Task<List<ProductResponseDto>> GetAllProducts()
+    {
+        return await Context.Product
+            .Include(p => p.User)
+            .Select(p => new ProductResponseDto(p)) 
+            .ToListAsync();
+    }
+
     public async Task DeleteProduct(Guid id){
 
         await Context.Product.Where(pr => pr.Id.Equals(id)).ExecuteDeleteAsync();

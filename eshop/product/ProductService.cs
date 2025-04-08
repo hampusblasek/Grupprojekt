@@ -68,6 +68,12 @@ public class ProductService { // : IProductService
         return product;
     }
 
+    public async Task<List<ProductResponseDto>> GetProducts(Guid id)
+    {
+        List<ProductResponseDto> products = await ProductRepository.GetAllProducts();
+        return products;
+    }
+
     public async Task<List<ProductResponseDto>> SortProductsByPrice()
     {
         List<ProductResponseDto> productList = await ProductRepository.GetAllProducts(); // Will get all products from getAllProducts

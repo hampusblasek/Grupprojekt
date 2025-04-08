@@ -58,15 +58,14 @@ public class ProductController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-    /*
+    
     // show all products
     [HttpGet("all")]
     public async Task<IActionResult> GetProducts()
     {
         try
         {
-            List<ProductDto> product = await ProductService.GetProducts();
-
+            List<ProductResponseDto> product = await ProductService.GetProducts(Guid.Empty);
             return Ok(product);
         }
         catch (Exception e)
@@ -74,7 +73,7 @@ public class ProductController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-
+    /*
     // show all products from a specific user
     [HttpGet("my/{id}")]
     public async Task<IActionResult> GetMyProducts(Guid id)
