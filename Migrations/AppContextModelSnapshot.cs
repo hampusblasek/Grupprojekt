@@ -163,6 +163,9 @@ namespace Grupprojekt.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("InStock")
+                        .HasColumnType("boolean");
+
                     b.Property<double>("Price")
                         .HasColumnType("double precision");
 

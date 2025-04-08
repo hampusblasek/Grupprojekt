@@ -1,15 +1,17 @@
 using System.Text.RegularExpressions; // to use Regex
 
-public interface IProductService{
-Task<Product> RegisterProduct(string id, string title, string description, double price); // Add new product
-Task<List<ProductResponseDto>> GetProducts(Guid id); // Returns a list with all products
-Task<List<ProductResponseDto>> SortProductsByPrice();
-Task<IEnumerable<ProductResponseDto>> GetMyProducts(Guid id); // Returns a list with a specific users products
-Task<Product> FindProduct(string title); // returns a product with matching titles
-Task<Product> DeleteProduct(Guid userId, Guid productId); // Delete a product - a user can only delete its own products
+public interface IProductService
+{
+    Task<Product> RegisterProduct(string id, string title, string description, bool inStock, double price); // Add new product
+    Task<List<ProductResponseDto>> GetProducts(Guid id); // Returns a list with all products
+    Task<List<ProductResponseDto>> SortProductsByPrice();
+    Task<IEnumerable<ProductResponseDto>> GetMyProducts(Guid id); // Returns a list with a specific users products
+    Task<Product> FindProduct(string title); // returns a product with matching titles
+    Task<Product> DeleteProduct(Guid userId, Guid productId); // Delete a product - a user can only delete its own products
 }
 
-public class ProductService { // : IProductService
+public class ProductService
+{ // : IProductService
 
     private readonly ProductRepository ProductRepository;
 
@@ -18,7 +20,7 @@ public class ProductService { // : IProductService
         this.ProductRepository = productRepository;
     }
 
-    public async Task<Product> RegisterProduct(string userId, string title, string description, double price)
+    public async Task<Product> RegisterProduct(string userId, string title, string description, bool inStock, double price)
     {
         User? user = await ProductRepository.FindById(userId);
         if (user == null)
@@ -41,7 +43,7 @@ public class ProductService { // : IProductService
         {
             throw new ArgumentException("Title can only contain letters, numbers, spaces, commas, and periods");
         }
-        
+
         // Validate product description
         if (string.IsNullOrWhiteSpace(description))
         {
@@ -63,10 +65,11 @@ public class ProductService { // : IProductService
             throw new ArgumentException("Price must be greater than 0 and less than 1,000,000");
         }
 
-        Product product = new Product(title, description, price, user);
+        Product product = new Product(title, description, price, inStock, user);
         await ProductRepository.AddProduct(product, user);
         return product;
     }
+
 
     public async Task<List<ProductResponseDto>> SortProductsByPrice()
     {
@@ -76,5 +79,34 @@ public class ProductService { // : IProductService
 
         return sortedList;
     }
-    
-} 
+
+
+    // Get all products for a specific user ---- Rami
+    public async Task<IEnumerable<ProductResponseDto>> GetMyProducts(string userId)
+    {
+        // Check if userId is null or empty
+        if (string.IsNullOrEmpty(userId))
+        {
+            throw new ArgumentException("User ID cannot be null or empty.", nameof(userId));
+        }
+
+        var products = await ProductRepository.GetProductsByUserId(userId);
+
+        // Check if products are found
+        if (products == null || !products.Any())
+        {
+            throw new KeyNotFoundException($"No products found for user with this ID {userId}.");
+        }
+
+        // Return the products as ProductResponseDto
+        return products.Select(product => new ProductResponseDto(product)).ToList();
+    }
+
+
+    // Update the InStock status of a product
+    public async Task UpdateProductStockStatus(Guid productId, bool inStock)
+    {
+        await ProductRepository.UpdateProductStockStatus(productId, inStock);
+    }
+
+}

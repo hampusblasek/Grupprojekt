@@ -16,7 +16,7 @@ public class ProductController : ControllerBase
     // Add new product
     [Authorize] // Only authenticated users can add products
     [HttpPost("new")]
-    public async  Task<IActionResult> NewProduct([FromBody] ProductResponseDto dto)
+    public async Task<IActionResult> NewProduct([FromBody] ProductResponseDto dto)
     {
         // This will validate the validation attributes in the ProductResponseDto class
         if (!ModelState.IsValid)
@@ -28,14 +28,14 @@ public class ProductController : ControllerBase
         try
         {
             // string userId = dto.UserId; // Old way of getting the userId from the DTO
-            
+
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // New way of getting the userId from the token
             if (string.IsNullOrEmpty(userId))
             {
                 return Unauthorized("UserId is missing in the token.");
             }
 
-            Product product = await ProductService.RegisterProduct(userId, dto.Title, dto.Description,dto.Price);
+            Product product = await ProductService.RegisterProduct(userId, dto.Title, dto.Description, dto.InStock, dto.Price);
             ProductResponseDto output = new(product);
             return Ok(output);
         }
@@ -44,6 +44,8 @@ public class ProductController : ControllerBase
             return BadRequest(e.Message);
         }
     }
+
+
     [HttpGet("sort/price")]
     public async Task<IActionResult> SortProductsByPrice()
     {
@@ -58,6 +60,65 @@ public class ProductController : ControllerBase
             return BadRequest(e.Message);
         }
     }
+
+
+
+    // Show all products from a specific user (based on the authenticated user)
+    [HttpGet("user/{userId}")]
+    [Authorize]  // Makes sure the user is authenticated
+    public async Task<IActionResult> GetMyProducts()
+    {
+
+        try
+        {
+            // Get userId from the token
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? throw new UnauthorizedAccessException("User ID is missing.");
+
+            // Get the user products 
+            var products = await ProductService.GetMyProducts(userId);
+            return Ok(products);
+        }
+
+        // Return 400 Bad Request if user ID is invalid
+        catch (ArgumentException e)
+        {
+            return BadRequest(e.Message);
+        }
+
+        // Return 404 Not Found if no products or user not found
+        catch (KeyNotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+
+        // Catch other unexpected errors
+        catch (Exception e)
+        {
+            return BadRequest("Unexpected error: " + e.Message);
+        }
+    }
+
+    // Updates product inStock status
+    [HttpPut("instock/{productId}")]
+    [Authorize]
+    public async Task<IActionResult> UpdateInStockStatus(Guid productId, [FromBody] bool inStock)
+    {
+        try
+        {
+            // Get the userId from the token (assuming you're using JWT authentication)
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? throw new UnauthorizedAccessException("User ID is missing.");
+
+            // Update the inStock status
+            await ProductService.UpdateProductStockStatus(productId, inStock);
+            return Ok("Product stock status was updated successfully.");
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+
     /*
     // show all products
     [HttpGet("all")]
@@ -75,21 +136,6 @@ public class ProductController : ControllerBase
         }
     }
 
-    // show all products from a specific user
-    [HttpGet("my/{id}")]
-    public async Task<IActionResult> GetMyProducts(Guid id)
-    {
-        try
-        {
-            IEnumerable<ProductDto> product = await ProductService.GetMyProducts(id);
-            
-            return Ok(product);
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
-    }
     // search for a specific product
     [HttpGet("search/{title}")]
     public async Task<IActionResult> FindProducts(string title)
