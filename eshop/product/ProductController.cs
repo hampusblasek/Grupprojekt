@@ -34,7 +34,7 @@ public class ProductController : ControllerBase
                 return Unauthorized("UserId is missing in the token.");
             }
 
-            Product product = await ProductService.RegisterProduct(userId, dto.Title, dto.Description, dto.InStock, dto.Price);
+            Product product = await ProductService.RegisterProduct(userId, dto.Title, dto.Description, dto.Price);
             ProductResponseDto output = new(product);
             return Ok(output);
         }

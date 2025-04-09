@@ -6,15 +6,15 @@ public class Product
     public string Title { get; set; } = "";
     public string Description { get; set; } = "";
     public double Price { get; set; }
-    public bool InStock { get; set; } = true;
+    public bool InStock { get; set; }
     public User User { get; set; }
 
-    public Product(string title, string description, double price, bool inStock, User user)
+    public Product(string title, string description, double price, User user)
     {
         this.Title = title;
         this.Description = description;
         this.Price = price;
-        this.InStock = inStock;
+        this.InStock = true;
         this.User = user;
         this.Id = Guid.NewGuid();
     }

@@ -2,7 +2,7 @@ using System.Text.RegularExpressions; // to use Regex
 
 public interface IProductService
 {
-    Task<Product> RegisterProduct(string id, string title, string description, bool inStock, double price); // Add new product
+    Task<Product> RegisterProduct(string id, string title, string description, double price); // Add new product
     Task<List<ProductResponseDto>> GetProducts(Guid id); // Returns a list with all products
     Task<List<ProductResponseDto>> SortProductsByPrice();
     Task<IEnumerable<ProductResponseDto>> GetMyProducts(string id); // Returns a list with a specific users products
@@ -21,7 +21,7 @@ public class ProductService : IProductService
         this.ProductRepository = productRepository;
     }
 
-    public async Task<Product> RegisterProduct(string userId, string title, string description, bool inStock, double price)
+    public async Task<Product> RegisterProduct(string userId, string title, string description, double price)
     {
         User? user = await ProductRepository.FindById(userId);
         if (user == null)
@@ -66,7 +66,7 @@ public class ProductService : IProductService
             throw new ArgumentException("Price must be greater than 0 and less than 1,000,000");
         }
 
-        Product product = new Product(title, description, price, inStock, user);
+        Product product = new Product(title, description, price, user);
         await ProductRepository.AddProduct(product, user);
         return product;
     }
