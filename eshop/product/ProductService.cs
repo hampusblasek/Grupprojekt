@@ -117,4 +117,15 @@ public class ProductService
         await ProductRepository.UpdateProductStockStatus(productId, inStock);
     }
 
+    public async Task<Product> FindProduct(string title)
+{
+    if (string.IsNullOrWhiteSpace(title))
+    {
+        throw new ArgumentException("Search term cannot be empty");
+    }
+ 
+    var product = await ProductRepository.FindProduct(title);
+    return product ?? throw new ArgumentException("No product found with that title");
+}
+
 }

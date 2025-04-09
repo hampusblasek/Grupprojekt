@@ -77,4 +77,16 @@ public class ProductRepository
         }
     }
 
+    public async Task<Product?> FindProduct(string title)
+{
+    if (string.IsNullOrWhiteSpace(title))
+    {
+        return null; 
+    }
+ 
+    return await Context.Product
+        .Include(p => p.User) 
+        .FirstOrDefaultAsync(p => p.Title.ToLower().Contains(title.ToLower()));
+}
+
 }

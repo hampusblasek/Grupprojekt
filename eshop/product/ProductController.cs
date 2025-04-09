@@ -129,6 +129,24 @@ public class ProductController : ControllerBase
         }
     }
 
+    [HttpGet("search/{title}")]
+public async Task<IActionResult> FindProducts(string title)
+{
+    try
+    {
+        Product product = await ProductService.FindProduct(title);
+        ProductResponseDto output = new(product); 
+        return Ok(output);
+    }
+     // If an error occurs (e.g., invalid input or no product found), return a 400 Bad Request with the error message
+    catch (Exception e)
+    {
+        return BadRequest(e.Message);
+    }
+}
+
+
+
 
 
     /*
