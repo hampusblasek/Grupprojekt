@@ -77,4 +77,16 @@ public class ProductRepository
         }
     }
 
+public async Task<Product?> FindProduct(string title)
+{
+    if (string.IsNullOrWhiteSpace(title))
+    {
+        return null; // Låt service-lagret hantera detta med ett eget felmeddelande
+    }
+
+    return await Context.Product
+        .Include(p => p.User) // Inkludera användaren som skapat produkten, om relevant
+        .FirstOrDefaultAsync(p => p.Title.ToLower().Contains(title.ToLower()));
+}
+
 }
