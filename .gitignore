@@ -64,6 +64,11 @@ BenchmarkDotNet.Artifacts/
 project.lock.json
 project.fragment.lock.json
 artifacts/
+bin/
+obj/
+
+# Entity Framework Migrations
+**/Migrations/
 
 # Tye
 .tye/
