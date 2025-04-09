@@ -81,11 +81,11 @@ public async Task<Product?> FindProduct(string title)
 {
     if (string.IsNullOrWhiteSpace(title))
     {
-        return null; // Låt service-lagret hantera detta med ett eget felmeddelande
+        return null; 
     }
 
     return await Context.Product
-        .Include(p => p.User) // Inkludera användaren som skapat produkten, om relevant
+        .Include(p => p.User) 
         .FirstOrDefaultAsync(p => p.Title.ToLower().Contains(title.ToLower()));
 }
 
