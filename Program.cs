@@ -34,8 +34,8 @@ public class Program
         // Added services and repositories for dependency injection
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IUserRepository, UserRepository>();
-        builder.Services.AddScoped<ProductService>(); // add IProductService
-        builder.Services.AddScoped<ProductRepository>(); // add IProductRepository
+        builder.Services.AddScoped<IProductService, ProductService>(); 
+        builder.Services.AddScoped<IProductRepository, ProductRepository>(); 
 
         builder.Services.AddControllers();
 
@@ -47,8 +47,8 @@ public class Program
         app.UseHttpsRedirection();
         app.MapIdentityApi<User>();
         app.MapControllers();
-        app.UseAuthentication(); //.7
-        app.UseAuthorization(); // 6.
+        app.UseAuthentication(); 
+        app.UseAuthorization(); 
 
         app.Run();
     }

@@ -5,17 +5,18 @@ public interface IProductService
     Task<Product> RegisterProduct(string id, string title, string description, bool inStock, double price); // Add new product
     Task<List<ProductResponseDto>> GetProducts(Guid id); // Returns a list with all products
     Task<List<ProductResponseDto>> SortProductsByPrice();
-    Task<IEnumerable<ProductResponseDto>> GetMyProducts(Guid id); // Returns a list with a specific users products
+    Task<IEnumerable<ProductResponseDto>> GetMyProducts(string id); // Returns a list with a specific users products
     Task<Product> FindProduct(string title); // returns a product with matching titles
-    Task<Product> DeleteProduct(Guid userId, Guid productId); // Delete a product - a user can only delete its own products
+    Task<Product> DeleteProduct(Guid id, string userId); // Delete a product - a user can only delete its own products
+    Task UpdateProductStockStatus(Guid productId, bool inStock); // update stock-status on a specific product
 }
 
-public class ProductService
-{ // : IProductService
+public class ProductService : IProductService
+{ 
 
-    private readonly ProductRepository ProductRepository;
+    private readonly IProductRepository ProductRepository;
 
-    public ProductService(ProductRepository productRepository)
+    public ProductService(IProductRepository productRepository)
     {
         this.ProductRepository = productRepository;
     }
@@ -127,5 +128,27 @@ public class ProductService
     var product = await ProductRepository.FindProduct(title);
     return product ?? throw new ArgumentException("No product found with that title");
 }
+
+public async Task<Product> DeleteProduct(Guid id, string userId)
+    {
+        User? user = await ProductRepository.FindById(userId);
+        if (user == null)
+        {
+            throw new ArgumentException("User not found");
+        }
+        Product? product = await ProductRepository.FindProductById(id);
+        if (product == null)
+        {
+            throw new ArgumentException("This product does not exist");
+        }
+        Product? deleteProduct = user.Products.Find(pr => pr.Id.Equals(id));
+        if (deleteProduct == null)
+        {
+            throw new ArgumentException("You dont have authority to delete this product");
+        }
+
+        await ProductRepository.DeleteProduct(product.Id);
+        return product;
+    }
 
 }

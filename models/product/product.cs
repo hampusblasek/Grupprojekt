@@ -6,7 +6,7 @@ public class Product
     public string Title { get; set; } = "";
     public string Description { get; set; } = "";
     public double Price { get; set; }
-    public bool InStock { get; set; }
+    public bool InStock { get; set; } = true;
     public User User { get; set; }
 
     public Product(string title, string description, double price, bool inStock, User user)
@@ -39,7 +39,6 @@ public class ProductResponseDto
     [Required(ErrorMessage = "Price is required")]
     [Range(0.01, 1000000, ErrorMessage = "Price must be greater than 0")]
     public double Price { get; set; }
-    // public string UserId { get; set; } = ""; // Identity Core uses string for Id // Don't need this since we are using the UserId from the token
 
     public bool InStock { get; set; }
 
@@ -50,7 +49,6 @@ public class ProductResponseDto
         this.Price = product.Price;
         this.InStock = product.InStock;
         this.Id = product.Id;
-        // this.UserId = product.User?.Id ?? ""; // Don't need this since we are using the UserId from the token
     }
 
     public ProductResponseDto() { }

@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 [Route("product")]
 public class ProductController : ControllerBase
 {
-    private readonly ProductService ProductService;
+    private readonly IProductService ProductService;
 
-    public ProductController(ProductService productService)
+    public ProductController(IProductService productService)
     {
         this.ProductService = productService;
     }
@@ -28,7 +28,6 @@ public class ProductController : ControllerBase
         try
         {
             // string userId = dto.UserId; // Old way of getting the userId from the DTO
-
             string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // New way of getting the userId from the token
             if (string.IsNullOrEmpty(userId))
             {
@@ -145,62 +144,22 @@ public async Task<IActionResult> FindProducts(string title)
     }
 }
 
-
-
-
-
-    /*
-    // show all products
-    [HttpGet("all")]
-    public async Task<IActionResult> GetProducts()
-
-    /*
-    // show all products from a specific user
-    [HttpGet("my/{id}")]
-    public async Task<IActionResult> GetMyProducts(Guid id)
-
+[HttpDelete("remove/{id}")]
+[Authorize]
+    public async Task<IActionResult> DeleteProduct(Guid id)
     {
         try
         {
-            List<ProductDto> product = await ProductService.GetProducts();
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if(userId == null) throw new ArgumentNullException("User not found");
 
-            return Ok(product);
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
-    }
-
-    // search for a specific product
-    [HttpGet("search/{title}")]
-    public async Task<IActionResult> FindProducts(string title)
-    {
-        try
-        {
-            Product product = await ProductService.FindProduct(title);
-            
-            return Ok(product);
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
-    }
-    
-    //Delete a product
-    [HttpDelete("remove")]
-    public async  Task<IActionResult> RemoveProduct([FromQuery] Guid userId, Guid productId )
-    {
-        try
-        {
-            Product product = await ProductService.RemoveProduct(userId, productId);
-            ProductDto output = new(product);
+            Product product = await ProductService.DeleteProduct(id, userId);
+            ProductResponseDto output = new(product);
             return Ok(output);
         }
         catch (Exception e)
         {
             return BadRequest(e.Message);
-        } 
-    }   */
+        }
+    }
 }
