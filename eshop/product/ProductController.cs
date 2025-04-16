@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+namespace Grupprojekt;
 
 [ApiController]
 [Route("product")]
@@ -16,7 +17,7 @@ public class ProductController : ControllerBase
     // Add new product
     [Authorize] // Only authenticated users can add products
     [HttpPost("new")]
-    public async Task<IActionResult> NewProduct([FromBody] ProductResponseDto dto)
+    public async Task<IActionResult> NewProduct([FromBody] ProductCreateDto dto)
     {
         // This will validate the validation attributes in the ProductResponseDto class
         if (!ModelState.IsValid)

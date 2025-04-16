@@ -1,3 +1,4 @@
+namespace Grupprojekt;
 public interface IUserService{
 Task<User> RemoveUser(string id); // Delete user
 

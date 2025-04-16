@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+namespace Grupprojekt;
 
 public interface IProductRepository
 {
@@ -15,9 +16,9 @@ public interface IProductRepository
 public class ProductRepository : IProductRepository
 { 
 
-    private readonly AppContext Context;
+    private readonly AppDbContext Context;
 
-    public ProductRepository(AppContext context)
+    public ProductRepository(AppDbContext context)
     {
         this.Context = context;
     }

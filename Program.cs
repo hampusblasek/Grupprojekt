@@ -8,16 +8,19 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        DotNetEnv.Env.Load();
-        string connectionString =
-            Environment.GetEnvironmentVariable("CONNECTION_STRING")
-            ?? throw new Exception("Missing CONNECTION_STRING environment variable");
         var builder = WebApplication.CreateBuilder(args);
-
-        builder.Services.AddDbContext<AppContext>(options =>
+        if (!builder.Environment.IsEnvironment("Test"))
         {
-            options.UseNpgsql(connectionString);
-        }); 
+            DotNetEnv.Env.Load();
+            string connectionString =
+                Environment.GetEnvironmentVariable("CONNECTION_STRING")
+                ?? throw new Exception("Missing CONNECTION_STRING environment variable");
+
+            builder.Services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseNpgsql(connectionString);
+            });
+        }
         builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme); 
         builder.Services.AddAuthorization(options =>
         {
@@ -28,7 +31,7 @@ public class Program
         });
 
         builder.Services.AddIdentityCore<User>() 
-        .AddEntityFrameworkStores<AppContext>()
+        .AddEntityFrameworkStores<AppDbContext>()
         .AddApiEndpoints();
 
         // Added services and repositories for dependency injection

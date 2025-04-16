@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-public class AppContext : IdentityDbContext<User>
+namespace Grupprojekt;
+public class AppDbContext : IdentityDbContext<User>
 {
-    public AppContext(DbContextOptions<AppContext> options) : base(options) { }
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
     public DbSet<Product> Product { get; set; }
 }

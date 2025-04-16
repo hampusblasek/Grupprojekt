@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions; // to use Regex
+namespace Grupprojekt;
 
 public interface IProductService
 {

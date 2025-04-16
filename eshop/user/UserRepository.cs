@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+namespace Grupprojekt;
 public interface IUserRepository{
 Task<User?> FindById(string id); // Returns user with matching id
 Task DeleteUser(string id); // Delete user
@@ -7,9 +8,9 @@ Task DeleteUserProducts(List<Product> products);
 
 public class UserRepository : IUserRepository{
 
-    private readonly AppContext Context;
+    private readonly AppDbContext Context;
 
-    public UserRepository(AppContext context){
+    public UserRepository(AppDbContext context){
         this.Context = context;
     }
     public async Task<User?> FindById(string id){
